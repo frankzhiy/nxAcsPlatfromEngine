@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface AngiographyResultRepository extends JpaRepository<AngiographyEntity,String> {
     List<AngiographyEntity> findByCaseNumber(String caseNumber);
+    void deleteByCaseNumberAndTimeOfAdmission(String caseNumber, String timeOfAdmission);
+
 }

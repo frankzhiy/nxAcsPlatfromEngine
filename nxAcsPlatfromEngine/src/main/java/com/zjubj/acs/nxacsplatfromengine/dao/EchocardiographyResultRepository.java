@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface EchocardiographyResultRepository extends JpaRepository<EchocardiographyEntity, String> {
     List<EchocardiographyEntity> findByCaseNumber(String caseNumber);
+    void deleteByCaseNumberAndTimeOfAdmission(String caseNumber, String timeOfAdmission);
+
 }

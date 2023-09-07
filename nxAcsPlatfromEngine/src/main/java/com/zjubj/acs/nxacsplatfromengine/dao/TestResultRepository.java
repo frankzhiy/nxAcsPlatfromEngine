@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface TestResultRepository extends JpaRepository<TestEntity, String> {
     List<TestEntity> findByCaseNumber(String caseNumber);
+    void deleteByCaseNumberAndTimeOfAdmission(String caseNumber, String timeOfAdmission);
+
 }

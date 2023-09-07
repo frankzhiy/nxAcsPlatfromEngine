@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface FollowUpResultRepository extends JpaRepository<FollowUpEntity,String> {
     List<FollowUpEntity> findByCaseNumber(String caseNumber);
+    void deleteByCaseNumberAndTimeOfAdmission(String caseNumber, String timeOfAdmission);
+
 }

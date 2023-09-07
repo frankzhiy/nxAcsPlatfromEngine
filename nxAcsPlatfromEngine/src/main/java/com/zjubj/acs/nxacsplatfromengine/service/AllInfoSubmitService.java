@@ -11,5 +11,6 @@ import com.zjubj.acs.nxacsplatfromengine.dto.Util.ResultDTO;
 public interface AllInfoSubmitService {
 
 
-    ResultDTO submitInfo(AllInfoDTO allInfoDTO);
+    ResultDTO<String> submitInfo(AllInfoDTO allInfoDTO);
+    ResultDTO<String> deleteInfo(String caseNumber, String timeOfAdmission);
 }

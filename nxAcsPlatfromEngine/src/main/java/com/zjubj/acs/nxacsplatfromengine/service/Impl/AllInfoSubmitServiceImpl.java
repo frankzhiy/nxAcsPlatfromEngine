@@ -7,6 +7,7 @@ import com.zjubj.acs.nxacsplatfromengine.entity.*;
 import com.zjubj.acs.nxacsplatfromengine.service.AllInfoSubmitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author frank_zhiy
@@ -34,8 +35,8 @@ public class AllInfoSubmitServiceImpl implements AllInfoSubmitService {
     @Autowired
     private TestResultRepository testResultRepository;
     @Override
-    public ResultDTO submitInfo(AllInfoDTO allInfoDTO) {
-        ResultDTO resultDTO = new ResultDTO();
+    public ResultDTO<String> submitInfo(AllInfoDTO allInfoDTO) {
+        ResultDTO<String> resultDTO = new ResultDTO();
 
         try {
             UserListEntity entity = new UserListEntity();
@@ -87,15 +88,37 @@ public class AllInfoSubmitServiceImpl implements AllInfoSubmitService {
             resultDTO.sendFailedMessage(e);
         }
 
-
-//        System.out.println("Received BaseInfo: " + allInfoDTO.getBaseInfo());
-//        System.out.println("Received BaseInfo: " + allInfoDTO.getMedicalHistory());
-//        System.out.println("Received BaseInfo: " + allInfoDTO.getAngiography());
-//        System.out.println("Received BaseInfo: " + allInfoDTO.getTest());
-        System.out.println("Received BaseInfo: " + allInfoDTO.getFollowUp());
-//        System.out.println("Received BaseInfo: " + allInfoDTO.getEchocardiography());
         return resultDTO;
     }
+
+
+    @Override
+    @Transactional
+    public ResultDTO<String> deleteInfo(String caseNumber, String timeOfAdmission) {
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+
+        try {
+            // 删除数据表 userList 中的数据
+            userListRepository.deleteByCaseNumberAndTimeOfAdmission(caseNumber, timeOfAdmission);
+
+            // 为其他数据表转换时间格式
+            String convertedTimeOfAdmission = convertDateFormat(timeOfAdmission);
+
+            angiographyResultRepository.deleteByCaseNumberAndTimeOfAdmission(caseNumber, convertedTimeOfAdmission);
+            echocardiographyResultRepository.deleteByCaseNumberAndTimeOfAdmission(caseNumber, convertedTimeOfAdmission);
+            followUpResultRepository.deleteByCaseNumberAndTimeOfAdmission(caseNumber, convertedTimeOfAdmission);
+            medicalHistoryResultRepository.deleteByCaseNumberAndTimeOfAdmission(caseNumber, convertedTimeOfAdmission);
+            testResultRepository.deleteByCaseNumberAndTimeOfAdmission(caseNumber, convertedTimeOfAdmission);
+
+            resultDTO.setSuccess(true);
+            resultDTO.setMessage("Data deleted successfully.");
+        } catch (Exception e) {
+            resultDTO.sendFailedMessage(e);
+        }
+
+        return resultDTO;
+    }
+
 
     private String convertDateFormat(String originalDate) {
         if (originalDate == null || originalDate.trim().isEmpty()) {

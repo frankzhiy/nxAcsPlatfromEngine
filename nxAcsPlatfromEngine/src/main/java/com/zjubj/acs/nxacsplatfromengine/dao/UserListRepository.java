@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface UserListRepository extends JpaRepository<UserListEntity, String> {
     List<UserListEntity> findByManageDoctors(String manageDoctors);
+    void deleteByCaseNumberAndTimeOfAdmission(String caseNumber, String timeOfAdmission);
+
 }

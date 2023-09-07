@@ -74,4 +74,18 @@ public class basicController {
         allInfoSubmitService.submitInfo(allInfoDTO);
         return null;
     }
+
+    @RequestMapping(value="/deleteInfo", method = RequestMethod.DELETE)
+    public ResponseEntity<ResultDTO<String>> deleteInfoByCaseNumberAndTimeOfAdmission(
+            @RequestParam String caseNumber,
+            @RequestParam String timeOfAdmission) {
+
+        ResultDTO<String> result = allInfoSubmitService.deleteInfo(caseNumber, timeOfAdmission);
+
+        if (result.isSuccess()) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().body(result);
+        }
+    }
 }

@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface MedicalHistoryResultRepository extends JpaRepository<MedicalHistoryEntity, String>{
     List<MedicalHistoryEntity> findByCaseNumber(String caseNumber);
+    void deleteByCaseNumberAndTimeOfAdmission(String caseNumber, String timeOfAdmission);
+
 }
