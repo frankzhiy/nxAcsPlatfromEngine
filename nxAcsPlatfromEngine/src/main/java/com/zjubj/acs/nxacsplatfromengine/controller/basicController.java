@@ -1,12 +1,11 @@
 package com.zjubj.acs.nxacsplatfromengine.controller;
 
 import com.zjubj.acs.nxacsplatfromengine.dto.*;
+import com.zjubj.acs.nxacsplatfromengine.dto.Util.ResultDTO;
 import com.zjubj.acs.nxacsplatfromengine.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,9 @@ public class basicController {
     @Autowired
     private AngiographyResultService angiographyResultService;
 
+    @Autowired
+    private AllInfoSubmitService allInfoSubmitService;
+
     @RequestMapping(value="/userList", method = RequestMethod.GET)
     public List<Map<String, Object>> getUserListByManageDoctors(@RequestParam String manageDoctors) {
         return userListService.findByManageDoctors(manageDoctors);
@@ -65,5 +67,11 @@ public class basicController {
     @RequestMapping(value="/angiographyResult", method = RequestMethod.GET)
     public List<AngiographyEntityDTO> getAngiographyResultByCaseNumber(@RequestParam String caseNumber) {
         return angiographyResultService.findByCaseNumber(caseNumber);
+    }
+
+    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+    public ResultDTO submitAllInfo(@RequestBody AllInfoDTO allInfoDTO) {
+        allInfoSubmitService.submitInfo(allInfoDTO);
+        return null;
     }
 }
