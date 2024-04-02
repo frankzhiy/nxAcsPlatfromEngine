@@ -5,17 +5,17 @@ import java.util.Objects;
 
 /**
  * @author frank_zhiy
- * @date 2023/4/4
+ * @date 2023/10/31
  * @Description
  */
 @Entity
-@Table(name = "user_list", schema = "nx_acs", catalog = "")
-public class UserListEntity {
+@Table(name = "mace_predict", schema = "nx_acs", catalog = "")
+public class MacePredictEntity {
     private long serialNumber;
     private String caseNumber;
     private String timeOfAdmission;
-    private String manageDoctors;
     private String attribute;
+    private String manageDoctors;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -49,6 +49,16 @@ public class UserListEntity {
     }
 
     @Basic
+    @Column(name = "attribute")
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    @Basic
     @Column(name = "manageDoctors")
     public String getManageDoctors() {
         return manageDoctors;
@@ -62,22 +72,12 @@ public class UserListEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserListEntity that = (UserListEntity) o;
-        return serialNumber == that.serialNumber && Objects.equals(caseNumber, that.caseNumber) && Objects.equals(timeOfAdmission, that.timeOfAdmission) && Objects.equals(manageDoctors, that.manageDoctors);
+        MacePredictEntity that = (MacePredictEntity) o;
+        return serialNumber == that.serialNumber && Objects.equals(caseNumber, that.caseNumber) && Objects.equals(timeOfAdmission, that.timeOfAdmission) && Objects.equals(attribute, that.attribute) && Objects.equals(manageDoctors, that.manageDoctors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(serialNumber, caseNumber, timeOfAdmission, manageDoctors);
-    }
-
-    @Basic
-    @Column(name = "attribute")
-    public String getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
+        return Objects.hash(serialNumber, caseNumber, timeOfAdmission, attribute, manageDoctors);
     }
 }

@@ -40,46 +40,48 @@ public class AllInfoSubmitServiceImpl implements AllInfoSubmitService {
 
         try {
             UserListEntity entity = new UserListEntity();
-            entity.setCaseNumber(allInfoDTO.getBaseInfo().get("caseNumber").toString().replace("\"", ""));
-            entity.setTimeOfAdmission(allInfoDTO.getBaseInfo().get("timeOfAdmission").toString().replace("\"", ""));
-            entity.setManageDoctors(allInfoDTO.getBaseInfo().get("manageDoctors").toString().replace("\"", ""));
+            entity.setCaseNumber(allInfoDTO.getBaseInfo().get("formStore").get("caseNumber").toString().replace("\"", ""));
+            entity.setTimeOfAdmission(allInfoDTO.getBaseInfo().get("formStore").get("timeOfAdmission").toString().replace("\"", ""));
+            entity.setManageDoctors(allInfoDTO.getBaseInfo().get("formStore").get("manageDoctors").toString().replace("\"", ""));
+            entity.setAttribute(allInfoDTO.getBaseInfo().get("bFormStore").toString());
+//            System.out.println(allInfoDTO.getBaseInfo().get("bFormStore").get("sex"));
             userListRepository.save(entity);
 
-            String originalTimeOfAdmission = allInfoDTO.getBaseInfo().get("timeOfAdmission").toString().replace("\"", "");
+            String originalTimeOfAdmission = allInfoDTO.getBaseInfo().get("formStore").get("timeOfAdmission").toString().replace("\"", "");
             String convertedTimeOfAdmission = convertDateFormat(originalTimeOfAdmission);
 
             MedicalHistoryEntity medicalHistoryEntity = new MedicalHistoryEntity();
-            medicalHistoryEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("caseNumber").toString().replace("\"", ""));
+            medicalHistoryEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("formStore").get("caseNumber").toString().replace("\"", ""));
             medicalHistoryEntity.setTimeOfAdmission(convertedTimeOfAdmission);
-            medicalHistoryEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("manageDoctors").toString().replace("\"", ""));
+            medicalHistoryEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("formStore").get("manageDoctors").toString().replace("\"", ""));
             medicalHistoryEntity.setAttribute(allInfoDTO.getMedicalHistory().toString());
             medicalHistoryResultRepository.save(medicalHistoryEntity);
 
             AngiographyEntity angiographyEntity = new AngiographyEntity();
-            angiographyEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("caseNumber").toString().replace("\"", ""));
+            angiographyEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("formStore").get("caseNumber").toString().replace("\"", ""));
             angiographyEntity.setTimeOfAdmission(convertedTimeOfAdmission);
-            angiographyEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("manageDoctors").toString().replace("\"", ""));
+            angiographyEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("formStore").get("manageDoctors").toString().replace("\"", ""));
             angiographyEntity.setAttribute(allInfoDTO.getAngiography().toString());
             angiographyResultRepository.save(angiographyEntity);
 
             EchocardiographyEntity echocardiographyEntity = new EchocardiographyEntity();
-            echocardiographyEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("caseNumber").toString().replace("\"", ""));
+            echocardiographyEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("formStore").get("caseNumber").toString().replace("\"", ""));
             echocardiographyEntity.setTimeOfAdmission(convertedTimeOfAdmission);
-            echocardiographyEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("manageDoctors").toString().replace("\"", ""));
+            echocardiographyEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("formStore").get("manageDoctors").toString().replace("\"", ""));
             echocardiographyEntity.setAttribute(allInfoDTO.getEchocardiography().toString());
             echocardiographyResultRepository.save(echocardiographyEntity);
 
             FollowUpEntity followUpEntity = new FollowUpEntity();
-            followUpEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("caseNumber").toString().replace("\"", ""));
+            followUpEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("formStore").get("caseNumber").toString().replace("\"", ""));
             followUpEntity.setTimeOfAdmission(convertedTimeOfAdmission);
-            followUpEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("manageDoctors").toString().replace("\"", ""));
+            followUpEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("formStore").get("manageDoctors").toString().replace("\"", ""));
             followUpEntity.setAttribute(allInfoDTO.getFollowUp().toString());
             followUpResultRepository.save(followUpEntity);
 
             TestEntity testEntity = new TestEntity();
-            testEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("caseNumber").toString().replace("\"", ""));
+            testEntity.setCaseNumber(allInfoDTO.getBaseInfo().get("formStore").get("caseNumber").toString().replace("\"", ""));
             testEntity.setTimeOfAdmission(convertedTimeOfAdmission);
-            testEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("manageDoctors").toString().replace("\"", ""));
+            testEntity.setManageDoctors(allInfoDTO.getBaseInfo().get("formStore").get("manageDoctors").toString().replace("\"", ""));
             testEntity.setAttribute(allInfoDTO.getTest().toString());
             testResultRepository.save(testEntity);
 
